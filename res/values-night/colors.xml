@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2018 AICP
+<!--  Copyright (C) 2014-2016 The Dirty Unicorns Project
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -16,17 +16,5 @@
  -->
 
 <resources>
-
-    <style name="SeekBarPreferenceChamValueTextAppearance" parent="@*android:style/TextAppearance.Toast" />
-
-    <!-- SeekBarPreferenceCham value popup -->
-    <style name="SeekBarPreferenceChamValueView">
-        <item name="android:textColor">?attr/value_popup_view_fg</item>
-        <item name="android:textAppearance">@style/SeekBarPreferenceChamValueTextAppearance</item>
-        <item name="android:background">@drawable/seekbar_popup_bg</item>
-        <item name="android:paddingHorizontal">24dp</item>
-        <item name="android:paddingVertical">15dp</item>
-        <item name="android:fitsSystemWindows">false</item>
-    </style>
-
+    <color name="cardview_bg">@*android:color/background_device_default_dark</color>
 </resources>

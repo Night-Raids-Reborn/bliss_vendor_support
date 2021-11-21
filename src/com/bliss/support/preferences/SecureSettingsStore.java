@@ -18,7 +18,6 @@
 package com.bliss.support.preferences;
 
 import android.content.ContentResolver;
-import android.os.UserHandle;
 import android.preference.PreferenceDataStore;
 import android.provider.Settings;
 
@@ -32,7 +31,7 @@ public class SecureSettingsStore extends androidx.preference.PreferenceDataStore
     }
 
     public boolean getBoolean(String key, boolean defValue) {
-        return Settings.Secure.getIntForUser(mContentResolver, key, defValue ? 1 : 0, UserHandle.USER_CURRENT) != 0;
+        return getInt(key, defValue ? 1 : 0) != 0;
     }
 
     public float getFloat(String key, float defValue) {

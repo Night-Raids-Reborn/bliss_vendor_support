@@ -20,15 +20,12 @@ package com.bliss.support.colorpicker;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.preference.*;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -36,6 +33,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.preference.*;
 
 import com.bliss.support.R;
 
@@ -53,13 +52,14 @@ public class ColorPickerPreference extends Preference implements
     private int mValue = Color.BLACK;
     private float mDensity = 0;
     private boolean mAlphaSliderEnabled = false;
-    private boolean mEnabled = true;
 
     // if we return -6, button is not enabled
     static final String SETTINGS_NS = "http://schemas.android.com/apk/res/com.android.settings";
     static final int DEF_VALUE_DEFAULT = -6;
     boolean mUsesDefaultButton = false;
     int mDefValue = -1;
+    
+    private boolean mShowLedPreview;
 
     private EditText mEditText;
 
@@ -98,6 +98,7 @@ public class ColorPickerPreference extends Preference implements
                 mUsesDefaultButton =  true;
                 mDefValue = defVal;
             }
+            mShowLedPreview = attrs.getAttributeBooleanValue(null, "ledPreview", false);
         }
     }
 
@@ -210,22 +211,6 @@ public class ColorPickerPreference extends Preference implements
                 (mValue - 0x101010) : mValue;
         iView.setImageDrawable(createOvalShape(size, 0xFF000000 + imageColor));
         iView.setTag("preview");
-        iView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mEnabled) {
-                    showDialog(null);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        if (mEnabled != enabled) {
-            mEnabled = enabled;
-        }
     }
 
     @Override
@@ -251,7 +236,7 @@ public class ColorPickerPreference extends Preference implements
     }
 
     protected void showDialog(Bundle state) {
-        mDialog = new ColorPickerDialog(getContext(), mValue);
+        mDialog = new ColorPickerDialog(getContext(), mValue, mShowLedPreview);
         mDialog.setOnColorChangedListener(this);
         if (mAlphaSliderEnabled) {
             mDialog.setAlphaSliderVisible(true);
